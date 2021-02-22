@@ -1,0 +1,68 @@
+@mixin mq($size) {
+    @media screen and (min-width: $size) {
+        @content;
+    }
+}
+
+#mainGrid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    background-color: aqua;
+    @include mq(450px) {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+.boxes {
+    width: 28px;
+    height: 28px;
+    border: 1px inset gainsboro;
+    @include mq(450px) {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+.bomb {
+    display: inline;
+}
+
+.showBomb {
+    background-color: chocolate;
+}
+
+.safe {
+    background-color: floralwhite;
+}
+
+.highlight {
+    background-color: chartreuse;
+}
+
+.one {
+    color: red;
+}
+
+.two {
+    color: blue;
+}
+
+.three {
+    color: green;
+}
+
+.four {
+    color: violet;
+}
+
+.five {
+    color: darkorange;
+}
+
+.six {
+    color: deeppink;
+}
