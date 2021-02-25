@@ -1,15 +1,17 @@
 document.addEventListener("readystatechange", (event) => {
+    const mainGrid = document.getElementById("mainGrid");
+    const flagsLeft = document.getElementById("flagCount");
+    var flagCount = width * width / 5;
+    flagsLeft.innerHTML = `Flags left : ${flagCount}`;
     if (event.target.readyState === "complete") {
         initialise();
     };
-    const mainGrid = document.getElementById("mainGrid");
 });
-
+let width = 10;
 var array = new Array,
     bombArray = new Array,
-    zeroArray = [];
+    zeroArray = new Array;
 
-let width = 10;
 
 function initialise() {
     createStructure();
@@ -22,6 +24,10 @@ function createStructure() {
         div.className = "boxes";
         array.push(div);
         mainGrid.appendChild(div);
+        div.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            updateFlagCount(div);
+        });
         div.addEventListener("click", () => {
             if (div.classList.contains("bomb")) {
                 gameOver();
@@ -29,24 +35,27 @@ function createStructure() {
                 showNumber(i);
             };
         });
+        // div.addEventListener("click", () => { createChoices(div); });
     };
     settingBombs();
     setNumber();
 }
 
 function settingBombs() {
-    for (let i = 0; i < width * width / 5; i++) {
-        const div = array[Math.round(Math.random() * 100)];
-        bombArray.push(div);
-        div.classList.add("bomb");
+    for (let i = 0; bombArray.length < width * width / 5; i++) {
+        const div = array[Math.floor(Math.random() * 100)];
+        if (!bombArray.includes(div)) {
+            bombArray.push(div);
+            div.classList.add("bomb");
+        };
     };
+    flagCount = bombArray.length;
 }
 
 function setNumber() {
     setTimeout(() => {
         for (let i = 0; i < width * width; i++) {
             let tile = array[i];
-            // console.log(tile);
             if (!tile.classList.contains("bomb")) {
                 let total = 0;
                 let onLeftEdge = i % width === 0;
@@ -77,6 +86,22 @@ function setNumber() {
     }, 10);
 }
 
+function createChoices(div) {
+    const flag = document.createElement("div");
+    flag.id = "flag";
+    flag.innerHTML = "🚩";
+    const close = document.createElement("div");
+    close.id = "close";
+    close.innerHTML = "X";
+    const hammer = document.createElement("div");
+    hammer.id = "hammer";
+    hammer.innerHTML = "🔨";
+    div.appendChild(flag);
+    div.appendChild(close);
+    div.appendChild(hammer);
+    flag.addEventListener("click", () => { updateFlagCount(div) });
+}
+
 function highlightEmptyTile() {
     const tile1 = zeroArray[0];
     tile1.classList.add("highlight");
@@ -92,28 +117,56 @@ function highlightEmptyTile() {
     });
 }
 
+function updateFlagCount(tile) {
+    if (!tile.classList.contains("safe")) {
+        if (tile.textContent) {
+            tile.innerHTML = '';
+            flagCount++;
+        } else {
+            tile.textContent = " 🚩 ";
+            flagCount--;
+        }
+    }
+    const flagsLeft = document.getElementById("flagCount");
+    flagsLeft.innerHTML = `Flags left : ${flagCount}`;
+    if (flagCount == 0 && bombArray.every((div) => { div.textContent == " 🚩 " })) document.getElementById("gameOver").innerHTML = "WIN WIN";
+}
+
 function gameOver() {
     bombArray.forEach(div => {
         div.innerHTML = ' 💣 ';
     });
-    setTimeout(() => { alert("Game Over") }, 10);
+    document.getElementById("gameOver").innerHTML = "!GAME OVER";
 }
 
 function showNumber(i) {
-    if (!array[i].classList.contains("bomb") && !array[i].textContent) {
-        const tile = array[i];
+    const tile = array[i];
+    if (!tile.classList.contains("bomb") && !tile.classList.contains("safe")) {
         const data = tile.getAttribute("data");
         tile.classList.add("safe");
         if (data != null) {
             const total = parseInt(data);
-            if (total == 1) tile.classList.add("one");
-            if (total == 2) tile.classList.add("two");
-            if (total == 3) tile.classList.add("three");
-            if (total == 4) tile.classList.add("four");
-            if (total == 5) tile.classList.add("five");
-            if (total == 6) tile.classList.add("six");
+            switch (total) {
+                case 1:
+                    tile.classList.add("one");
+                    break;
+                case 2:
+                    tile.classList.add("two");
+                    break;
+                case 3:
+                    tile.classList.add("three");
+                    break;
+                case 4:
+                    tile.classList.add("four");
+                    break;
+                case 5:
+                    tile.classList.add("five");
+                    break;
+                case 6:
+                    tile.classList.add("six");
+                    break;
+            }
             tile.innerHTML = total;
-            console.log(total);
             return;
         } else { showSurroundingNumber(i); };
     };
