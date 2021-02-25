@@ -4,13 +4,33 @@
     }
 }
 
+@keyframes blink {
+    0% {
+        background-color: gainsboro;
+    }
+    25% {
+        background-color: deeppink;
+    }
+    50% {
+        background-color: blue;
+    }
+    75% {
+        background-color: darkorange;
+    }
+    100% {
+        background-color: gainsboro;
+    }
+}
+
 #mainGrid {
     display: flex;
     flex-wrap: wrap;
     width: 300px;
     height: 300px;
     margin: auto;
-    background-color: aqua;
+    background-color: gainsboro;
+    border: 10px solid gainsboro;
+    margin-top: 50px;
     @include mq(450px) {
         width: 400px;
         height: 400px;
@@ -18,29 +38,76 @@
 }
 
 .boxes {
-    width: 28px;
-    height: 28px;
-    border: 1px inset gainsboro;
+    width: 30px;
+    height: 30px;
+    border: 4px solid;
+    border-color: rgb(235, 235, 235) rgb(160, 160, 160) rgb(160, 160, 160) rgb(196, 196, 196);
+    box-sizing: border-box;
     @include mq(450px) {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
     }
 }
 
-.bomb {
-    display: inline;
+.highlight {
+    animation-name: blink;
+    animation-delay: 1s;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 5;
 }
 
-.showBomb {
-    background-color: chocolate;
+#flag {
+    text-align: center;
+    font-family: cursive;
+    display: inline-block;
+    width: 32px;
+    height: 31px;
+    padding-top: 4px;
+    padding-left: 3px;
+    border: 0.8px solid;
+    border-radius: 50%;
+    background: #7080907d;
+    position: relative;
+    left: 17px;
+    bottom: -4px;
+}
+
+#close {
+    text-align: center;
+    font-family: cursive;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 0.8px solid;
+    border-radius: 50%;
+    background: #7080907d;
+    position: relative;
+    bottom: 32px;
+    right: 28px;
+}
+
+#hammer {
+    position: relative;
+    text-align: center;
+    font-family: cursive;
+    display: inline-block;
+    width: 35px;
+    height: 30px;
+    padding-top: 5px;
+    border: 0.8px solid;
+    border-radius: 50%;
+    background: #7080907d;
+    bottom: 14px;
+    right: 27px;
 }
 
 .safe {
-    background-color: floralwhite;
-}
-
-.highlight {
-    background-color: chartreuse;
+    border: 1px solid #a4a4a4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 22px;
+    text-align: center;
+    padding: 5px;
 }
 
 .one {
@@ -65,4 +132,17 @@
 
 .six {
     color: deeppink;
+}
+
+#gameOver {
+    text-align: center;
+    margin: 5px auto;
+    color: red;
+    font-size: 26px;
+}
+
+#flagCount {
+    text-align: center;
+    margin: 5px auto;
+    font-size: 26px;
 }
