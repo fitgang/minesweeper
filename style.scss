@@ -74,8 +74,8 @@ p {
     border-radius: 50%;
     background: #7080907d;
     position: relative;
-    left: 17px;
-    bottom: -4px;
+    left: 7px;
+    bottom: 49px;
 }
 
 #close {
@@ -88,8 +88,8 @@ p {
     border-radius: 50%;
     background: #7080907d;
     position: relative;
-    bottom: 32px;
-    right: 28px;
+    bottom: 81px;
+    right: 41px;
 }
 
 #hammer {
@@ -103,8 +103,8 @@ p {
     border: 0.8px solid;
     border-radius: 50%;
     background: #7080907d;
-    bottom: 14px;
-    right: 27px;
+    bottom: 58px;
+    right: 44px;
 }
 
 .safe {
@@ -113,6 +113,12 @@ p {
     font-size: 22px;
     text-align: center;
     padding: 5px;
+}
+
+.over {
+    border: 1px solid #a4a4a4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top: 10px;
 }
 
 .one {

@@ -29,13 +29,14 @@ function createStructure() {
             updateFlagCount(div);
         });
         div.addEventListener("click", () => {
+            if (div.textContent == " 🚩 ") return;
             if (div.classList.contains("bomb")) {
                 gameOver();
             } else {
                 showNumber(i);
             };
         });
-        // div.addEventListener("click", () => { createChoices(div); });
+        //  div.addEventListener("click", () => { createChoices(div, i); });
     };
     settingBombs();
     setNumber();
@@ -86,7 +87,7 @@ function setNumber() {
     }, 10);
 }
 
-function createChoices(div) {
+function createChoices(div, i) {
     const flag = document.createElement("div");
     flag.id = "flag";
     flag.innerHTML = "🚩";
@@ -99,27 +100,26 @@ function createChoices(div) {
     div.appendChild(flag);
     div.appendChild(close);
     div.appendChild(hammer);
-    flag.addEventListener("click", () => { updateFlagCount(div) });
+    flag.addEventListener("click", () => {
+        removeChoices(flag, close, hammer);
+        updateFlagCount(div);
+    });
+    close.addEventListener("click", () => { removeChoices(flag, close, hammer); });
+    hammer.addEventListener("click", () => {
+        removeChoices(flag, close, hammer);
+        if (div.classList.contains("bomb")) { gameOver(); } else { showNumber(i); };
+    });
 }
 
-function highlightEmptyTile() {
-    const tile1 = zeroArray[0];
-    tile1.classList.add("highlight");
-    tile1.addEventListener("click", () => {
-        tile1.classList.remove("highlight");
-        tile2.classList.remove("highlight");
-    });
-    const tile2 = zeroArray[zeroArray.length - 1];
-    tile2.classList.add("highlight");
-    tile2.addEventListener("click", () => {
-        tile1.classList.remove("highlight");
-        tile2.classList.remove("highlight");
-    });
+function removeChoices(flag, close, hammer) {
+    flag.remove();
+    close.remove();
+    hammer.remove();
 }
 
 function updateFlagCount(tile) {
-    if (!tile.classList.contains("safe")) {
-        if (tile.textContent) {
+    if (!tile.classList.contains("safe") && !tile.classList.contains("over")) {
+        if (tile.textContent == " 🚩 ") {
             tile.innerHTML = '';
             flagCount++;
         } else {
@@ -129,14 +129,7 @@ function updateFlagCount(tile) {
     }
     const flagsLeft = document.getElementById("flagCount");
     flagsLeft.innerHTML = `Flags left : ${flagCount}`;
-    if (flagCount == 0 && bombArray.every((div) => { div.textContent == " 🚩 " })) document.getElementById("gameOver").innerHTML = "WIN WIN";
-}
-
-function gameOver() {
-    bombArray.forEach(div => {
-        div.innerHTML = ' 💣 ';
-    });
-    document.getElementById("gameOver").innerHTML = "!GAME OVER";
+    if (flagCount == 0 && bombArray.every((div) => { return div.textContent == " 🚩 " })) document.getElementById("gameOver").innerHTML = "WIN WIN";
 }
 
 function showNumber(i) {
@@ -194,4 +187,27 @@ function showSurroundingNumber(i) {
         // DOWN RIGHT
         if (i < 90 && !onRightEdge) showNumber(i + 1 + width);
     }, 10);
+}
+
+function gameOver() {
+    bombArray.forEach(div => {
+        div.innerHTML = ' 💣 ';
+        div.classList.add("over");
+    });
+    document.getElementById("gameOver").innerHTML = "!GAME OVER";
+}
+
+function highlightEmptyTile() {
+    const tile1 = zeroArray[0];
+    tile1.classList.add("highlight");
+    tile1.addEventListener("click", () => {
+        tile1.classList.remove("highlight");
+        tile2.classList.remove("highlight");
+    });
+    const tile2 = zeroArray[zeroArray.length - 1];
+    tile2.classList.add("highlight");
+    tile2.addEventListener("click", () => {
+        tile1.classList.remove("highlight");
+        tile2.classList.remove("highlight");
+    });
 }
