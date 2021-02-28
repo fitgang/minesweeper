@@ -24,19 +24,26 @@ function createStructure() {
         div.className = "boxes";
         array.push(div);
         mainGrid.appendChild(div);
-        div.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-            updateFlagCount(div);
-        });
         div.addEventListener("click", () => {
-            if (div.textContent == " 🚩 ") return;
-            if (div.classList.contains("bomb")) {
-                gameOver();
-            } else {
-                showNumber(i);
+            if (div.classList.contains("highlight2")) {
+                removeChoices(div);
+                return;
+            }
+            const flag = document.getElementById("flag");
+            if (flag) {
+                let next = flag.nextElementSibling;
+                while (next) {
+                    next.remove();
+                    next = flag.nextElementSibling;
+                };
+                flag.remove();
+                document.querySelectorAll(".highlight2").forEach((tile) => {
+                    tile.classList.remove("highlight2");
+                });
             };
+            if (div.classList.contains("safe") || div.classList.contains("over")) return;
+            createChoices(div, i);
         });
-        //  div.addEventListener("click", () => { createChoices(div, i); });
     };
     settingBombs();
     setNumber();
@@ -88,33 +95,51 @@ function setNumber() {
 }
 
 function createChoices(div, i) {
+    div.classList.toggle("highlight2");
+    const choices = document.createElement("div");
+    choices.id = "choices";
     const flag = document.createElement("div");
     flag.id = "flag";
+    flag.className = "flag";
     flag.innerHTML = "🚩";
     const close = document.createElement("div");
     close.id = "close";
+    close.className = "close";
     close.innerHTML = "X";
-    const hammer = document.createElement("div");
-    hammer.id = "hammer";
-    hammer.innerHTML = "🔨";
-    div.appendChild(flag);
-    div.appendChild(close);
-    div.appendChild(hammer);
-    flag.addEventListener("click", () => {
-        removeChoices(flag, close, hammer);
+    if (i % width === width - 1 || i % width === width - 2 || i % width === width - 3) {
+        choices.style.right = "100px";
+    }
+    if (div.textContent == " 🚩 ") {
+        choices.style.bottom = "60px";
+    };
+    choices.appendChild(flag);
+    choices.appendChild(close);
+    div.appendChild(choices);
+    flag.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeChoices(div);
         updateFlagCount(div);
     });
-    close.addEventListener("click", () => { removeChoices(flag, close, hammer); });
-    hammer.addEventListener("click", () => {
-        removeChoices(flag, close, hammer);
+    close.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeChoices(div);
+    });
+    const hammer = document.createElement("div");
+    if (div.textContent == " 🚩 🚩X") return;
+    hammer.id = "hammer";
+    hammer.innerHTML = "🔨";
+    choices.appendChild(hammer);
+    hammer.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeChoices(div);
         if (div.classList.contains("bomb")) { gameOver(); } else { showNumber(i); };
     });
 }
 
-function removeChoices(flag, close, hammer) {
-    flag.remove();
-    close.remove();
-    hammer.remove();
+function removeChoices(div) {
+    div.classList.toggle("highlight2");
+    const choices = document.getElementById("choices");
+    choices.remove();
 }
 
 function updateFlagCount(tile) {
@@ -123,9 +148,9 @@ function updateFlagCount(tile) {
             tile.innerHTML = '';
             flagCount++;
         } else {
-            tile.textContent = " 🚩 ";
+            tile.innerHTML = " 🚩 ";
             flagCount--;
-        }
+        };
     }
     const flagsLeft = document.getElementById("flagCount");
     flagsLeft.innerHTML = `Flags left : ${flagCount}`;
