@@ -4,6 +4,7 @@ This is a classic ***MINESWEEPER Web Game***. You have to find out the bombs wit
 The game is developed using the concept of recursion.
 This game is ***responsive*** and have a ***mobile-first design***.
 
+<img src="image.jpg" alt="minesweeper">
 
 
 <br>A big thanks to Traversy Media for the video tutorial.
