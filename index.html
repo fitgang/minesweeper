@@ -10,12 +10,25 @@
     <title>Document</title>
 </head>
 
+<!-- TODO -->
+<!-- 1. Put a refresh button
+2. Set up local storage to store highest scores
+3. Set a button for instructions and put the instructions in the beginning   -->
+
+
+
 <body>
-    <p>INSTRUCTIONS:<br>1. Click on any of the colour changing tiles to start (TRUST ME! IT'S SAFE)<br>2. Click on 🚩 to flag the tile and 🔨 to break the tile <br>3. To WIN the game, you have to flag all the tiles that contain a bomb 💣 <br>4. If you clicked
-        on any wrong tile (containing a 💣 ), you lose the game <br>5. Click on the refresh button or refresh the tab to start a new game. <br> ENJOY! </p>
+    <div id="instructions">
+        <span>INSTRUCTIONS:</span>
+        <p>1. Click on any of the colour changing tiles to start (TRUST ME! IT'S SAFE)<br>2. Click on 🚩 to flag the tile and 🔨 to break the tile <br>3. To WIN the game, you have to flag all the tiles that contain a bomb 💣 <br>4. If you clicked on any
+            wrong tile (containing a 💣 ), you lose the game<br> ENJOY! </p>
+        <div><button type="button" id="tapToPlay">Tap to Play</button>
+        </div>
+    </div>
+    <p id="minesweeper">MINESWEEPER</p>
     <div id="mainGrid">
         <!-- <div class="boxes">
-            <div id="choices">
+            <div class="choices" id="choices">
                 <div id="flag" class="flag">🚩</div>
                 <div id="close" class="close">X</div>
                 <div id="hammer">🔨</div>
@@ -24,6 +37,7 @@
     </div>
     <div id="flagCount">Flags left : </div>
     <div id="gameOver"></div>
+    <button type="button" id="refresh">New Game</button>
 </body>
 
 </html>

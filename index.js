@@ -14,7 +14,7 @@ var array = new Array,
 
 
 function initialise() {
-    createStructure();
+    document.getElementById("tapToPlay").addEventListener("click", removeInstructions);
 }
 
 function createStructure() {
@@ -25,28 +25,17 @@ function createStructure() {
         array.push(div);
         mainGrid.appendChild(div);
         div.addEventListener("click", () => {
-            if (div.classList.contains("highlight2")) {
-                removeChoices(div);
-                return;
-            }
-            const flag = document.getElementById("flag");
-            if (flag) {
-                let next = flag.nextElementSibling;
-                while (next) {
-                    next.remove();
-                    next = flag.nextElementSibling;
-                };
-                flag.remove();
-                document.querySelectorAll(".highlight2").forEach((tile) => {
-                    tile.classList.remove("highlight2");
-                });
-            };
-            if (div.classList.contains("safe") || div.classList.contains("over")) return;
-            createChoices(div, i);
+            const begin = document.querySelectorAll(".highlight");
+            begin.forEach((h) => { h.classList.remove("highlight"); });
+            const lastClicked = document.querySelector(".highlight2");
+            if (lastClicked != null) removeChoices(lastClicked);
+            if (lastClicked == div) return;
+            if (!div.classList.contains("safe") && !div.classList.contains("over")) { createChoices(div, i); };
         });
     };
     settingBombs();
     setNumber();
+    setButton();
 }
 
 function settingBombs() {
@@ -95,9 +84,9 @@ function setNumber() {
 }
 
 function createChoices(div, i) {
-    div.classList.toggle("highlight2");
+    div.classList.add("highlight2");
     const choices = document.createElement("div");
-    choices.id = "choices";
+    choices.className = "choices";
     const flag = document.createElement("div");
     flag.id = "flag";
     flag.className = "flag";
@@ -111,6 +100,7 @@ function createChoices(div, i) {
     }
     if (div.textContent == " 🚩 ") {
         choices.style.bottom = "60px";
+        choices.style.justifyContent = "space-evenly";
     };
     choices.appendChild(flag);
     choices.appendChild(close);
@@ -137,9 +127,8 @@ function createChoices(div, i) {
 }
 
 function removeChoices(div) {
-    div.classList.toggle("highlight2");
-    const choices = document.getElementById("choices");
-    choices.remove();
+    div.classList.remove("highlight2");
+    div.removeChild(div.firstElementChild);
 }
 
 function updateFlagCount(tile) {
@@ -154,7 +143,7 @@ function updateFlagCount(tile) {
     }
     const flagsLeft = document.getElementById("flagCount");
     flagsLeft.innerHTML = `Flags left : ${flagCount}`;
-    if (flagCount == 0 && bombArray.every((div) => { return div.textContent == " 🚩 " })) document.getElementById("gameOver").innerHTML = "WIN WIN";
+    setTimeout(win(flagCount), 10);
 }
 
 function showNumber(i) {
@@ -214,25 +203,44 @@ function showSurroundingNumber(i) {
     }, 10);
 }
 
+function win(flagCount) {
+    if (flagCount == 0 && bombArray.every((div) => { return div.textContent == " 🚩 " })) {
+        const GM = document.getElementById("gameOver");
+        GM.style.display = "inherit";
+        GM.innerHTML = "WIN WIN";
+    }
+}
+
 function gameOver() {
     bombArray.forEach(div => {
         div.innerHTML = ' 💣 ';
         div.classList.add("over");
     });
-    document.getElementById("gameOver").innerHTML = "!GAME OVER";
+    const GM = document.getElementById("gameOver");
+    GM.style.display = "inherit";
+    GM.innerHTML = "💣GAME OVER💣";
 }
 
 function highlightEmptyTile() {
     const tile1 = zeroArray[0];
     tile1.classList.add("highlight");
-    tile1.addEventListener("click", () => {
-        tile1.classList.remove("highlight");
-        tile2.classList.remove("highlight");
-    });
-    const tile2 = zeroArray[zeroArray.length - 1];
+    const tile2 = zeroArray[Math.round(zeroArray.length / 2)];
     tile2.classList.add("highlight");
-    tile2.addEventListener("click", () => {
-        tile1.classList.remove("highlight");
-        tile2.classList.remove("highlight");
-    });
+}
+
+function setButton() {
+    const button = document.getElementById("refresh");
+    button.style.display = "initial";
+    button.addEventListener("click", refreshThePage);
+}
+
+function refreshThePage() {
+    if (confirm("Do you really want to start a new game?")) {
+        window.location.reload();
+    }
+}
+
+function removeInstructions() {
+    document.getElementById("instructions").style.display = "none";
+    createStructure();
 }

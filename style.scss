@@ -24,6 +24,12 @@
 
 body {
     margin: auto;
+    text-align: center;
+}
+
+#minesweeper {
+    font-size: 2.7em;
+    line-height: 0.5em;
 }
 
 #mainGrid {
@@ -41,10 +47,47 @@ body {
     }
 }
 
-p {
-    text-align: center;
-    font-size: larger;
-    margin: auto;
+button:hover {
+    transform: scale(1.05);
+}
+
+#instructions {
+    position: absolute;
+    box-sizing: border-box;
+    background-color: ghostwhite;
+    border: 10px groove yellow;
+    text-align: left;
+    padding: 0px 5px;
+    padding-top: 7px;
+    top: 15vh;
+    width: 100%;
+    height: 69vh;
+    p {
+        font-size: 15px;
+        margin: 6px 24px;
+        line-height: 20px;
+        @include mq(450px) {
+            font-size: 20px;
+            line-height: 30px;
+        }
+    }
+    div {
+        text-align: center;
+        #tapToPlay {
+            width: 8em;
+            height: 3em;
+            margin: 2em 6.5em;
+            border: 1px solid;
+            border-radius: 20px;
+            @include mq(450px) {
+                font-size: 20px;
+            }
+        }
+    }
+    @include mq(450px) {
+        font-size: 20px;
+        height: 45vh;
+    }
 }
 
 .boxes {
@@ -61,7 +104,7 @@ p {
     }
 }
 
-#choices {
+.choices {
     display: flex;
     position: relative;
     bottom: 45px;
@@ -87,7 +130,7 @@ p {
     padding-top: 3px;
     padding-left: 2px;
     border-radius: 50%;
-    background: #fbff05;
+    background: #FEFE33;
     @include mq(450px) {
         width: 34px;
         height: 30px;
@@ -112,14 +155,14 @@ p {
 }
 
 #hammer {
-    font-family: cursive;
+    font-size: 17px;
     width: 32px;
     height: 30px;
     padding-top: 2px;
     text-align: center;
     border: 0.8px solid;
     border-radius: 50%;
-    background: #4ef87a;
+    background: #2e2eff;
     @include mq(450px) {
         width: 33px;
     }
@@ -168,10 +211,33 @@ p {
 }
 
 #gameOver {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 38%;
+    left: 17%;
+    width: 66%;
+    height: 5.2rem;
+    padding-top: 24px;
     text-align: center;
-    margin: 5px auto;
-    color: red;
-    font-size: 26px;
+    color: #ffc83d;
+    font-size: 23px;
+    font-weight: 900;
+    background: linear-gradient(90deg, red, blue);
+    animation: visible;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes visible {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.51);
+        transition-duration: 2s;
+    }
 }
 
 #flagCount {
@@ -182,4 +248,12 @@ p {
 
 .highlight2 {
     border-color: rgb(160, 160, 160) rgb(196, 196, 196) rgb(235, 235, 235) rgb(160, 160, 160);
+}
+
+#refresh {
+    display: none;
+    width: 55px;
+    height: 55px;
+    border: 1px solid;
+    border-radius: 50%;
 }

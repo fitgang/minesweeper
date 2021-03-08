@@ -36,6 +36,12 @@
 
 body {
   margin: auto;
+  text-align: center;
+}
+
+#minesweeper {
+  font-size: 2.7em;
+  line-height: 0.5em;
 }
 
 #mainGrid {
@@ -59,10 +65,61 @@ body {
   }
 }
 
-p {
+button:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+#instructions {
+  position: absolute;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: ghostwhite;
+  border: 10px groove yellow;
+  text-align: left;
+  padding: 0px 5px;
+  padding-top: 7px;
+  top: 15vh;
+  width: 100%;
+  height: 69vh;
+}
+
+#instructions p {
+  font-size: 15px;
+  margin: 6px 24px;
+  line-height: 20px;
+}
+
+@media screen and (min-width: 450px) {
+  #instructions p {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+#instructions div {
   text-align: center;
-  font-size: larger;
-  margin: auto;
+}
+
+#instructions div #tapToPlay {
+  width: 8em;
+  height: 3em;
+  margin: 2em 6.5em;
+  border: 1px solid;
+  border-radius: 20px;
+}
+
+@media screen and (min-width: 450px) {
+  #instructions div #tapToPlay {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  #instructions {
+    font-size: 20px;
+    height: 45vh;
+  }
 }
 
 .boxes {
@@ -83,7 +140,7 @@ p {
   }
 }
 
-#choices {
+.choices {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -120,7 +177,7 @@ p {
   padding-top: 3px;
   padding-left: 2px;
   border-radius: 50%;
-  background: #fbff05;
+  background: #FEFE33;
 }
 
 @media screen and (min-width: 450px) {
@@ -149,14 +206,14 @@ p {
 }
 
 #hammer {
-  font-family: cursive;
+  font-size: 17px;
   width: 32px;
   height: 30px;
   padding-top: 2px;
   text-align: center;
   border: 0.8px solid;
   border-radius: 50%;
-  background: #4ef87a;
+  background: #2e2eff;
 }
 
 @media screen and (min-width: 450px) {
@@ -211,10 +268,53 @@ p {
 }
 
 #gameOver {
+  display: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: absolute;
+  top: 38%;
+  left: 17%;
+  width: 66%;
+  height: 5.2rem;
+  padding-top: 24px;
   text-align: center;
-  margin: 5px auto;
-  color: red;
-  font-size: 26px;
+  color: #ffc83d;
+  font-size: 23px;
+  font-weight: 900;
+  background: -webkit-gradient(linear, left top, right top, from(red), to(blue));
+  background: linear-gradient(90deg, red, blue);
+  -webkit-animation: visible;
+          animation: visible;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1.51);
+            transform: scale(1.51);
+    -webkit-transition-duration: 2s;
+            transition-duration: 2s;
+  }
+}
+
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1.51);
+            transform: scale(1.51);
+    -webkit-transition-duration: 2s;
+            transition-duration: 2s;
+  }
 }
 
 #flagCount {
@@ -225,5 +325,13 @@ p {
 
 .highlight2 {
   border-color: #a0a0a0 #c4c4c4 #ebebeb #a0a0a0;
+}
+
+#refresh {
+  display: none;
+  width: 55px;
+  height: 55px;
+  border: 1px solid;
+  border-radius: 50%;
 }
 /*# sourceMappingURL=style.css.map */
