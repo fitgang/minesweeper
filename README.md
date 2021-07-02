@@ -1,4 +1,4 @@
-# minesweeper
+# Minesweeper
 
 This is a classic ***MINESWEEPER Web Game***. You have to find out the bombs without tapping on any one.<br>
 The game is developed using the concept of recursion.
