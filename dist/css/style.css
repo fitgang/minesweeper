@@ -1,350 +1,303 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
-:root {
-    --first-color: #4921da;
-    --second-color: #daa521;
-    --third-color: #c7c7c7;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto Condensed', sans-serif;
-}
-
-body,
-#main,
-#currency-images,
-#main-container,
-#converter,
-.inputs,
-.all {
-    display: flex;
-    align-items: center;
-}
-
 body {
-    flex-direction: column;
-    visibility: hidden;
-    background: var(--third-color);
-    overflow: scroll;
-    -webkit-animation: bodyLoad 1s linear 2000ms forwards;
-    animation: bodyLoad 1s linear 2000ms forwards;
+    margin: auto;
+    text-align: center;
 }
 
-body::-webkit-scrollbar {
-    width: 10px;
-    background: transparent;
+#minesweeper {
+    font-size: 2.7em;
+    line-height: 0.5em;
 }
 
-body::-webkit-scrollbar-thumb {
-    background: #0000004b;
+#mainGrid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 310px;
+    height: 310px;
+    margin: auto;
+    background-color: gainsboro;
+    border: 4px solid gainsboro;
 }
 
-body::-webkit-scrollbar-thumb:hover {
-    background: #0000007a;
+@media screen and (min-width: 450px) {
+    #mainGrid {
+        width: 400px;
+        height: 400px;
+    }
 }
 
 button:hover {
-    cursor: pointer;
+    transform: scale(1.05);
 }
 
-#main {
-    flex-direction: column;
-    z-index: 1;
-    background: var(--third-color);
-}
-
-h1#cc {
-    margin-top: 12px;
-    font-size: 2.2em;
-    color: var(--first-color);
-}
-
-@media screen and (min-width: 525px) {
-    h1#cc {
-        font-size: 3em;
-    }
-}
-
-#currency-images {
+#instructions {
+    position: absolute;
+    top: 15vh;
+    box-sizing: border-box;
+    background-color: ghostwhite;
+    border: 10px groove yellow;
+    text-align: left;
+    padding: 0px 5px;
+    padding-top: 7px;
     width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    color: var(--second-color);
 }
 
-.fas {
-    position: static;
-    padding: 0.4em 0.7em;
-    font-size: 3.3em;
-    visibility: visible;
-    opacity: 0;
-    -webkit-animation: load 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-    animation: load 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-}
-
-@media screen and (min-width: 525px) {
-    .fas {
-        font-size: 4em;
+@media screen and (min-width: 450px) {
+    #instructions {
+        font-size: 20px;
     }
 }
 
-.fa-rupee-sign {
-    -webkit-animation-delay: 500ms;
-    animation-delay: 500ms;
-}
-
-.fa-dollar-sign {
-    -webkit-animation-delay: 1000ms;
-    animation-delay: 1000ms;
-}
-
-.fa-pound-sign {
-    -webkit-animation-delay: 1500ms;
-    animation-delay: 1500ms;
-}
-
-#main-container {
-    width: 100%;
-    flex-direction: column;
-    margin: 1em auto;
-}
-
-h2#description {
-    text-align: center;
-    font-size: 1.2em;
-    font-weight: 100;
-}
-
-@media screen and (min-width: 525px) {
-    h2#description {
-        font-size: 1.4em;
-    }
-}
-
-#converter {
-    height: 15rem;
-    width: 100%;
-    max-width: 400px;
-    padding: 0 10px;
-    margin-top: 5px;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-@media screen and (min-width: 525px) {
-    #converter {
-        height: 20rem;
-        margin-top: 12px;
-    }
-}
-
-#converter button {
+#instructions p {
     font-size: 15px;
-    padding: 5px;
-    background: var(--first-color);
-    color: var(--third-color);
+    margin: 6px 24px;
+    line-height: 20px;
 }
 
-@media screen and (min-width: 525px) {
-    #converter button {
-        font-size: 18px;
+@media screen and (min-width: 450px) {
+    #instructions p {
+        font-size: 20px;
+        line-height: 30px;
     }
 }
 
-#converter #swap {
-    align-self: flex-end;
-    border-radius: 15px;
+#instructions div {
+    text-align: center;
 }
 
-#converter #compare {
-    width: 50%;
-    margin-top: 25px;
-    border-radius: 50px;
-    visibility: hidden;
-}
-
-.inputs {
-    width: 100%;
-    justify-content: space-between;
-}
-
-.inputs select,
-.inputs input {
-    background: transparent;
-    border-color: var(--first-color);
-}
-
-.inputs select:focus,
-.inputs input:focus {
-    outline: var(--first-color) solid 1px;
-}
-
-.inputs select {
-    padding: 5px;
-    font-size: 14px;
-    border-width: 2px 0 0 0;
+#instructions div #tapToPlay {
+    width: 8em;
+    height: 3em;
+    margin: 1em 6.5em;
+    border: 1px solid;
     border-radius: 20px;
 }
 
-@media screen and (min-width: 525px) {
-    .inputs select {
-        font-size: 18px;
-        border-width: 3px 0 0 0;
+@media screen and (min-width: 450px) {
+    #instructions div #tapToPlay {
+        font-size: 20px;
     }
 }
 
-.inputs select option {
-    background: var(--second-color);
-    color: var(--first-color);
-}
-
-.inputs select:hover {
-    cursor: pointer;
-}
-
-.inputs input {
-    padding: 5px;
-    font-size: 15px;
-    width: 54%;
-    text-align: end;
-    border-width: 0 0 1px 0;
-}
-
-@media screen and (min-width: 525px) {
-    .inputs input {
-        font-size: 19px;
-        border-width: 0 0 2px 0;
-    }
-}
-
-.all {
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    background: var(--first-color);
-    padding-top: 3px;
-    transform: translateY(-50rem);
-    border-radius: 25px;
-    box-shadow: inset 0px -3px 10px 4px #000000b5;
-}
-
-.all div {
-    max-height: 70vh;
-    overflow-y: auto;
-    mix-blend-mode: screen;
-}
-
-.all div::-webkit-scrollbar {
-    width: 5px;
-    background: var(--third-color);
-}
-
-.all div::-webkit-scrollbar-thumb {
-    background: #000;
-}
-
-.all div::-webkit-scrollbar-thumb:hover {
-    background: #00000081;
-}
-
-.all p {
-    font-family: monospace;
-    font-style: italic;
-    letter-spacing: 1px;
-    padding: 8px;
-    color: #fff;
+.boxes {
     font-size: 14px;
+    width: 31px;
+    height: 31px;
+    border: 3.5px solid;
+    border-color: #ebebeb #a0a0a0 #a0a0a0 #c4c4c4;
+    box-sizing: border-box;
 }
 
-@media screen and (min-width: 525px) {
-    .all p {
-        font-size: 16px;
+@media screen and (min-width: 450px) {
+    .boxes {
+        width: 40px;
+        height: 40px;
+        font-size: 17px;
     }
 }
 
-#current {
-    color: #fff;
-    font-weight: 600;
-    transform: scaleY(1.3);
+.choices {
+    display: flex;
+    position: relative;
+    bottom: 45px;
+    width: 120px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-button#sort {
-    align-self: flex-end;
-    color: #fff;
-    background: transparent;
-    padding: 4px 14px;
-    font-size: 14px;
-    margin-right: 15px;
-    border: 1px solid #fff;
-    border-radius: 6px;
+.highlight {
+    -webkit-animation: blink 3s ease-in-out 1s 5;
+    animation: blink 3s ease-in-out 1s 5;
 }
 
-@media screen and (min-width: 525px) {
-    button#sort {
-        font-size: 15px;
+@-webkit-keyframes blink {
+    0% {
+        background-color: gainsboro;
+    }
+    25% {
+        background-color: deeppink;
+    }
+    50% {
+        background-color: blue;
+    }
+    75% {
+        background-color: darkorange;
+    }
+    100% {
+        background-color: gainsboro;
     }
 }
 
-#sort:active,
-#sort:hover {
-    background: #ffffff38;
+@keyframes blink {
+    0% {
+        background-color: gainsboro;
+    }
+    25% {
+        background-color: deeppink;
+    }
+    50% {
+        background-color: blue;
+    }
+    75% {
+        background-color: darkorange;
+    }
+    100% {
+        background-color: gainsboro;
+    }
 }
 
-section.show {
-    transform: translateY(0);
-    transition: transform 1s ease-in;
-    height: 70vh;
-}
-
-footer {
+.flag {
+    font-family: cursive;
+    width: 32px;
     text-align: center;
+    height: 28px;
+    border: 0.8px solid;
+    padding-top: 3px;
+    padding-left: 2px;
+    border-radius: 50%;
+    background: #FEFE33;
 }
 
-footer #lastUpdated {
-    color: #0000008a;
-    font-size: 14px;
-    letter-spacing: 1px;
-    padding: 5px;
+@media screen and (min-width: 450px) {
+    .flag {
+        width: 34px;
+        height: 30px;
+    }
 }
 
-footer a {
-    text-decoration: none;
-    color: var(--first-color);
-    font-weight: 700;
+.close {
+    font-family: cursive;
+    width: 24px;
+    height: 24px;
+    padding-top: 2px;
+    text-align: center;
+    border: 0.8px solid;
+    border-radius: 50%;
+    background: #ffffff;
 }
 
-@-webkit-keyframes load {
-    from {
+@media screen and (min-width: 450px) {
+    .close {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+#hammer {
+    font-size: 17px;
+    width: 32px;
+    height: 30px;
+    padding-top: 2px;
+    text-align: center;
+    border: 0.8px solid;
+    border-radius: 50%;
+    background: #2e2eff;
+}
+
+@media screen and (min-width: 450px) {
+    #hammer {
+        width: 33px;
+    }
+}
+
+.safe {
+    border: 1px solid #a4a4a4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 1px;
+}
+
+@media screen and (min-width: 450px) {
+    .safe {
+        font-size: 23px;
+        padding: 3px;
+    }
+}
+
+.over {
+    border: 1px solid #a4a4a4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top: 7px;
+}
+
+.one {
+    color: red;
+}
+
+.two {
+    color: blue;
+}
+
+.three {
+    color: green;
+}
+
+.four {
+    color: violet;
+}
+
+.five {
+    color: darkorange;
+}
+
+.six {
+    color: deeppink;
+}
+
+#gameOver {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 38%;
+    left: 17%;
+    width: 66%;
+    height: 5.2rem;
+    padding-top: 24px;
+    text-align: center;
+    color: #ffc83d;
+    font-size: 23px;
+    font-weight: 900;
+    background: linear-gradient(90deg, red, blue);
+    -webkit-animation: visible 1.5s forwards;
+    animation: visible 1.5s forwards;
+}
+
+@-webkit-keyframes visible {
+    0% {
         opacity: 0;
-        transform: rotate(0deg);
     }
-    to {
+    100% {
         opacity: 1;
-        transform: rotate(360deg);
+        transform: scale(1.51);
+        transition-duration: 2s;
     }
 }
 
-@keyframes load {
-    from {
+@keyframes visible {
+    0% {
         opacity: 0;
-        transform: rotate(0deg);
     }
-    to {
+    100% {
         opacity: 1;
-        transform: rotate(360deg);
+        transform: scale(1.51);
+        transition-duration: 2s;
     }
 }
 
-@-webkit-keyframes bodyLoad {
-    to {
-        visibility: visible;
-    }
+#flagCount {
+    text-align: center;
+    margin: 5px auto;
+    font-size: 26px;
 }
 
-@keyframes bodyLoad {
-    to {
-        visibility: visible;
-    }
+.highlight2 {
+    border-color: #a0a0a0 #c4c4c4 #ebebeb #a0a0a0;
+}
+
+#refresh {
+    display: none;
+    width: 55px;
+    height: 55px;
+    border: 1px solid;
+    border-radius: 50%;
 }
